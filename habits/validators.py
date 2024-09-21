@@ -27,11 +27,9 @@ class LeadTimeValidator:
     def __init__(self, field1):
         self.field1 = field1
 
-    def __call__(self, value):
-        habit = dict(value).get(self.field1)
-        print(habit)
-        if habit is not None and habit > timedelta(seconds=120):
-            raise ValidationError("Время выполнения должно быть не больше 120 секунд")
+    def __call__(self, habit):
+        if habit.get('time_to_complete') and habit.get('time_to_complete') > 120:
+            raise ValidationError('Время выполнения должно быть не больше 120 секунд.')
 class NiceHabitInAssociatedValidator:
     """
     В связанные привычки могут попадать только привычки с признаком приятной привычки.
